@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Cost Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"], select {
+            width: 195px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            text-align: center;
+            margin: auto;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        #replacementCost, #resurfaceCost {
+            font-size: 18px;
+        }
+        #savings {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="form-group">
+            <label for="length">Length in Inches (12 - 108):</label>
+            <input type="number" id="length" min="12" max="108">
+        </div>
+        <div class="form-group">
+            <label for="width">Width in Inches (12 - 30):</label>
+            <input type="number" id="width" min="12" max="30">
+        </div>
+        <div class="form-group">
+            <label for="thickness">Thickness in Inches:</label>
+            <select id="thickness">
+                <option value="0.20">Avg</option>
+                <option value="0.13">0.5</option>
+                <option value="0.19">0.75</option>
+                <option value="0.27">1</option>
+            </select>
+        </div>
+        <button onclick="calculateCost()">Calculate Costs</button>
+        <div class="result" id="replacementCost"></div>
+        <div class="result" id="resurfaceCost"></div>
+        <div class="result" id="savings"></div>
+    </div>
+    <script>
+        function calculateCost() {
+            var length = parseFloat(document.getElementById('length').value);
+            var width = parseFloat(document.getElementById('width').value);
+            var thickness = parseFloat(document.getElementById('thickness').value);
+
+            if (length && width && thickness) {
+                var replacementCost = length * width * thickness;
+                var resurfaceCost = length * width * 0.10;
+                var savings = replacementCost - resurfaceCost;
+                document.getElementById('replacementCost').innerText = 'Replacement Cost: $' + replacementCost.toFixed(2);
+                document.getElementById('resurfaceCost').innerText = 'Resurface Cost: $' + resurfaceCost.toFixed(2);
+                document.getElementById('savings').innerText = 'Savings: $' + savings.toFixed(2);
+            } else {
+                document.getElementById('replacementCost').innerText = 'Please fill all fields correctly.';
+                document.getElementById('resurfaceCost').innerText = '';
+                document.getElementById('savings').innerText = '';
+            }
+        }
+    </script>
+</body>
+</html>
